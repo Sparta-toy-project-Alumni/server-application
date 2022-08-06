@@ -35,4 +35,12 @@ router.get("/post", async (req, res) => {
   });
 });
 
+router.get("/post/:postId", async (req, res) => {
+  const { postId } = req.params;
+  const freePost = await Free.findOne({ postId });
+  res.status(200).send({
+    ok: true,
+    freePost,
+  });
+});
 module.exports = router;
