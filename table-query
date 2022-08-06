@@ -1,0 +1,70 @@
+CREATE TABLE IF NOT EXISTS Generation (
+    genId bigint(5) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+    startDate dateTime NOT NULL
+);
+CREATE TABLE IF NOT EXISTS User (
+    userId bigint(5) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+    genId bigint(5)  NOT NULL,
+    name varchar(255) NOT NULL,
+    profile varchar(255) NOT NULL,
+    admin boolean NOT NULL,
+    createdAt datetime NOT NULL DEFAULT NOW(),
+    updatedAt datetime NOT NULL DEFAULT NOW(),
+    FOREIGN KEY (genId) REFERENCES Generation(genId)
+);
+CREATE TABLE IF NOT EXISTS Free (
+    freeId bigint(5) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+    userId bigint(5)  NOT NULL,
+    title varchar(255) NOT NULL,
+    content varchar(255) NOT NULL,
+    createdAt datetime NOT NULL DEFAULT NOW(),
+    updatedAt datetime NOT NULL DEFAULT NOW(),
+    FOREIGN KEY (userId) REFERENCES User(userId)
+);
+CREATE TABLE IF NOT EXISTS FreeComment (
+    freeCommentId bigint(5) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+    userId bigint(5)  NOT NULL,
+    freeId bigint(5)  NOT NULL,
+    content varchar(255) NOT NULL,
+    createdAt datetime NOT NULL DEFAULT NOW(),
+    updatedAt datetime NOT NULL DEFAULT NOW(),
+    FOREIGN KEY (userId) REFERENCES User(userId),
+    FOREIGN KEY (freeId) REFERENCES Free(freeId)
+);
+CREATE TABLE IF NOT EXISTS Study (
+    studyId bigint(5) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+    userId bigint(5)  NOT NULL,
+    title varchar(255) NOT NULL,
+    content varchar(255) NOT NULL,
+    createdAt datetime NOT NULL DEFAULT NOW(),
+    FOREIGN KEY (userId) REFERENCES User(userId)
+);
+CREATE TABLE IF NOT EXISTS StudyComment (
+    studyCommentId bigint(5) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+    userId bigint(5)  NOT NULL,
+    studyId bigint(5)  NOT NULL,
+    content varchar(255) NOT NULL,
+    createdAt datetime NOT NULL DEFAULT NOW(),
+    updatedAt datetime NOT NULL DEFAULT NOW(),
+    FOREIGN KEY (userId) REFERENCES User(userId),
+    FOREIGN KEY (studyId) REFERENCES Study(studyId)
+);
+CREATE TABLE IF NOT EXISTS Notice (
+    noticeId bigint(5) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+    userId bigint(5)  NOT NULL,
+    title varchar(255) NOT NULL,
+    content varchar(255) NOT NULL,
+    createdAt datetime NOT NULL DEFAULT NOW(),
+    updatedAt datetime NOT NULL DEFAULT NOW(),
+    FOREIGN KEY (userId) REFERENCES User(userId)
+);
+CREATE TABLE IF NOT EXISTS NoticeComment (
+    noticeCommentId bigint(5) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+    userId bigint(5)  NOT NULL,
+    noticeId bigint(5)  NOT NULL,
+    content varchar(255) NOT NULL,
+    createdAt datetime NOT NULL DEFAULT NOW(),
+    updatedAt datetime NOT NULL DEFAULT NOW(),
+    FOREIGN KEY (userId) REFERENCES User(userId),
+    FOREIGN KEY (noticeId) REFERENCES Notice(noticeId)
+);
