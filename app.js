@@ -1,6 +1,15 @@
 const express = require("express");
+const cors = require("cors");
+
 const app = express();
 const port = 3000;
+
+app.use(
+  cors({
+    origin: "*", // 모든 출처 허용 옵션. true 를 써도 된다.
+  })
+);
+
 const userRouter = require("./routes/user");
 const freeRouter = require("./routes/free");
 const bodyParser = require("body-parser");
