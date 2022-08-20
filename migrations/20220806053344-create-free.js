@@ -9,13 +9,21 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       userId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
       },
       title: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       content: {
+        allowNull: false,
         type: Sequelize.STRING,
+      },
+      viewCount: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
       },
       createdAt: {
         allowNull: false,
