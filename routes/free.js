@@ -7,7 +7,6 @@ const { Op } = require("sequelize");
 router.post("/post", async (req, res) => {
   try {
     const { userId, title, content } = req.body;
-
     const result = await Free.create({
       userId,
       title,
@@ -35,9 +34,18 @@ router.get("/post", async (req, res) => {
   });
 });
 
-router.get("/post/:postId", async (req, res) => {
-  const { postId } = req.params;
-  const freePost = await Free.findOne({ postId });
+router.get("/post/:freeId", async (req, res) => {
+  const { freeId } = req.params;
+  console.log(freeId);
+  const freePost = await Free.findOne({ where: { freeId } });
+  console.log(freePost);
+  if (freePost == null) {
+    res.status(200).send({
+      ok: false,
+      message: "게시글이 존재하지 않습니다.",
+    });
+    return;
+  }
   res.status(200).send({
     ok: true,
     freePost,

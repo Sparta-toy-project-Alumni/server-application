@@ -1,9 +1,18 @@
 const express = require("express");
 const cors = require("cors");
+const Http = require("http");
+const routes = require("./routes");
 require("dotenv").config();
 
+const cookieParser = require("cookie-parser");
+
 const app = express();
+const http = Http.createServer(app);
 const port = process.env.EXPRESS_PORT || 3000;
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cookieParser());
 
 app.use(
   cors({
@@ -11,16 +20,10 @@ app.use(
   })
 );
 
-const userRouter = require("./routes/user");
-const freeRouter = require("./routes/free");
-const bodyParser = require("body-parser");
-app.use(bodyParser.json());
-app.use("/user", [userRouter]);
-app.use("/free", [freeRouter]);
+app.use("/", routes);
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
+http.listen(port, () => {
+  console.log(`Start listen Server: ${port}`);
 });
-app.listen(port, () => {
-  console.log(port, "포트로 서버가 열렸어요!");
-});
+
+module.exports = http;
