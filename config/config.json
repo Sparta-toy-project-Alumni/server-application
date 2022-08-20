@@ -1,22 +1,22 @@
 {
   "development": {
-    "username": "root",
-    "password": "1234",
-    "database": "database_development",
+    "username": "${process.env.db_id}",
+    "password": "${process.env.db_pw}",
+    "database": "${process.env.db_name}",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
-    "username": "root",
+    "username": "${process.env.db_id}",
     "password": null,
     "database": "database_test",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
+    "username": "${process.env.db_id}",
     "password": null,
-    "database": "database_production",
+    "database": "${process.env.db_pd_name}",
     "host": "127.0.0.1",
     "dialect": "mysql"
   }
